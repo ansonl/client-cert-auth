@@ -1,9 +1,9 @@
-#Client-Cert-Auth
-###HTTPS server that verifies client certificate authenticity.
+# Client-Cert-Auth
+### HTTPS server that verifies client certificate authenticity.
 
-#####Part of NAVFITOnline project [navfit99-js](https://github.com/ansonl/navfit99-js) and [navfit99-server](https://github.com/ansonl/navfit99-server)
+##### Part of NAVFITOnline project [navfit99-js](https://github.com/ansonl/navfit99-js) and [navfit99-server](https://github.com/ansonl/navfit99-server)
 
-Steps:
+#### Steps:
 
 1. Install Go.
 2. Get code with `git clone https://github.com/ansonl/client-cert-auth.git` or `go get github.com/ansonl/client-cert-auth`.
@@ -16,7 +16,7 @@ Steps:
   - Run *client-cert-auth* as the created system user. 
 
 
-####Features
+#### Features
 
 - [`acme/autocert`](https://godoc.org/golang.org/x/crypto/acme/autocert) integrated to use [Let's Encrypt](https://letsencrypt.org/) certificates for machine. 
 - Displays the verified certificate chain when presented with client certificate.
@@ -28,10 +28,10 @@ Steps:
 - Generates random UUID on user request and stores in a REDIS database using the client certificate Subject.CommonName as user unique identifier.
 
 
-####Verifying DoD Common Access Card (CAC):
+#### Verifying DoD Common Access Card (CAC):
 
 - You can find the most up to date DoD root and intermediate certificates at [DISA IASE tools](https://iase.disa.mil/pki-pke/Pages/tools.aspx) as *PKI CA Certificate Bundles: PKCS#7*. 
 
-####References:
+#### References:
 https://github.com/jcbsmpsn/golang-https-example
 https://github.com/alexmullins/ocspchecker
