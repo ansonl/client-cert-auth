@@ -16,9 +16,10 @@ import (
 	"io"
 )
 
-var noCertURL = "http://example.com"
-var verifyFailedURL = "http://example.com"
-var verifySuccessURL = "http://localhost:8080/user.html"
+var baseURL = "https://navfit99.github.io"
+var noCertURL = fmt.Sprintf("%s%s", baseURL, "/?authError=1")
+var verifyFailedURL = fmt.Sprintf("%s%s", baseURL, "/?authError=2")
+var verifySuccessURL = fmt.Sprintf("%s%s", baseURL, "/user.html")
 
 var certManager autocert.Manager
 
@@ -72,6 +73,7 @@ func verifyClient(w http.ResponseWriter, r *http.Request) {
 	log.Printf("%v TLS Peer Certificates provided.", len(r.TLS.PeerCertificates));
 
 	if len(r.TLS.PeerCertificates) < 1 {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		http.Redirect(w, r, noCertURL, 303)
 		return
 	}
@@ -96,6 +98,7 @@ func verifyClient(w http.ResponseWriter, r *http.Request) {
 		log.Printf("%v for certificate with Subject.CommonName %v and SerialNumber %v", err.Error(), userCert.Subject.CommonName, (*userCert.SerialNumber).String())
 		//log.Printf("%v for certificate with SerialNumber %v", err.Error(), *userCert.SerialNumber)
 
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		http.Redirect(w, r, verifyFailedURL, 303)
 		return
 	}
@@ -264,6 +267,10 @@ func loadCertPoolWithFilesInDirectory(certPool **x509.CertPool, directoryName st
 }
 
 func main() {
+	log.Println(noCertURL);
+	log.Println(verifyFailedURL);
+	log.Println(verifySuccessURL);
+
 	//Load Root and Intermediate certificate pools for use in verification
 	loadCertPoolWithFilesInDirectory(&caRootPool, caRootDirectory);
 	loadCertPoolWithFilesInDirectory(&caIntermediatePool, caIntermediateDirectory);
